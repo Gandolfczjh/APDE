@@ -9,6 +9,8 @@
 
 </div>
 
+[**English**](./README.md) | [**中文**](./README_zh.md)
+
 > **注意**: 本项目致力于目标检测器（Object Detectors）的对抗补丁攻击和防御研究，提供攻击、防御及测评流程。
 > 
 > This is the official repository for the paper [Revisiting Adversarial Patch Defenses on Object Detectors: Unified Evaluation, Large-Scale Dataset, and New Insights](https://arxiv.org/abs/2508.00649) accepted by ICCV2025.
