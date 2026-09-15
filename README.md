@@ -23,9 +23,9 @@ The current development plan is as follows, and we will continue to update this 
     - [ ] Integrate mainstream detector interfaces (YOLOv2/3/4/5/7, Faster R-CNN, SSD, CenterNet, ...).
     - [ ] Provide standardized robustness evaluation metrics (mAP under Attack, Attack Success Rate).
 
-- [ ] **2. APDE Dataset**
-    - [ ] Release the **A**dversarial **P**atch **D**efense **E**valuation dataset download link.
-    - [x] Provide a reconstruction dataset reader and Hugging Face export tools.
+- [x] **2. APDE Dataset**
+    - [x] Release the **A**dversarial **P**atch **D**efense **E**valuation dataset download link.
+    - [x] Provide dataset readers, Hugging Face download/processing examples, and export tools.
 
 - [x] **3. Retrained Defense**
     - [x] Release retrained defense weights (SAC, Adyolo, NAPGuard).
@@ -61,7 +61,7 @@ pip install -r requirements.txt
 
 ## APDE dataset
 
-The reconstructed dataset is complete and validated: **94 patch types, 94,000 patched images**, with one mask and annotation file per image. The Hugging Face download link is **pending publication**; this Git repository includes the patch originals and reader tools; the full synthesized images will be hosted on HF. See the [publishing guide](docs/HUGGINGFACE_RELEASE.md) and [dataset card](docs/HF_DATASET_CARD.md).
+The reconstructed dataset is complete and validated: **94 patch types, 94,000 patched images**, with one mask and annotation file per image. The full dataset is available on **[Hugging Face](https://huggingface.co/datasets/Gandolfczjh/APDE)**. This Git repository includes the patch originals and reader tools. See the [publishing guide](docs/HUGGINGFACE_RELEASE.md) and [dataset card](docs/HF_DATASET_CARD.md).
 
 | Split | Patch types | Patched images |
 |---|---:|---:|
@@ -72,6 +72,92 @@ The reconstructed dataset is complete and validated: **94 patch types, 94,000 pa
 This is a reconstruction, **not the exact original dataset used for the paper**. The paper reports 56,400/37,600 images; this release keeps each 1,000-image patch type entirely in one split. Clean sources are shared across patch types, including across train/test. Split isolation applies to patch types, not source photographs.
 
 The source pool contains 1,000 positives (81 INRIA Test + 919 COCO val2017) sampled without replacement from 288 + 2,693 positive candidates, and 1,000 annotation-negative backgrounds (162 INRIA + 838 COCO). Images are padded/resized to 416×416. Masks are lossless binary PNG (0/255); annotation rows are `person x1 y1 x2 y2` and `patch x1 y1 x2 y2` in pixel coordinates. Patch right/bottom coordinates are exclusive.
+
+### Download and use APDE from Hugging Face
+
+**Dataset: [Gandolfczjh/APDE](https://huggingface.co/datasets/Gandolfczjh/APDE)**
+
+Install the data dependencies from this repository:
+
+```bash
+python -m pip install -r requirements-data.txt
+```
+
+| Configuration | Splits | Contents |
+|---|---|---|
+| `patched` (default) | `train`: 57,000; `test`: 37,000 | Patched images, binary masks, TXT annotations and metadata |
+| `clean` | `positive`: 1,000; `negative`: 1,000 | Clean source images and person boxes |
+| `patches` | `all`: 94 | Original patches and train/test assignments |
+
+#### Load online
+
+```python
+from datasets import load_dataset
+
+data = load_dataset("Gandolfczjh/APDE", "patched")
+assert len(data["train"]) == 57000
+assert len(data["test"]) == 37000
+sample = data["test"][0]
+
+clean = load_dataset("Gandolfczjh/APDE", "clean")
+patches = load_dataset("Gandolfczjh/APDE", "patches", split="all")
+```
+
+The first call downloads and prepares the selected configuration in the Hugging Face cache; subsequent calls reuse it. For a quick preview without downloading the entire configuration first, use streaming:
+
+```python
+stream = load_dataset("Gandolfczjh/APDE", "patched", split="test", streaming=True)
+sample = next(iter(stream))
+```
+
+#### Download all files and load locally
+
+The complete release contains 97 Parquet files and is about 20 GB. Allow extra disk space for the prepared cache or extracted images. Run from the cloned code repository; `APDE` below is a data subdirectory:
+
+```bash
+hf download Gandolfczjh/APDE --repo-type dataset --local-dir APDE
+python tools/verify_apde_hf.py APDE
+```
+
+Repeat the download command to resume an interrupted download. Once downloaded, load the local Parquet files:
+
+```python
+from datasets import load_dataset
+
+data = load_dataset("parquet", data_files={
+    "train": "APDE/data/train/*.parquet",
+    "test": "APDE/data/test/*.parquet",
+})
+sample = data["test"][0]
+```
+
+The HF release embeds image, mask and annotation contents in Parquet. Its `data/train`, `data/test`, `clean` and `patches` folders differ from the original PNG/JSONL layout below. Use `load_dataset()` for downloaded HF files; `APDEDataset("APDE")` expects the original layout with `train.jsonl` and `test.jsonl`.
+
+#### Process images, masks and annotations
+
+```python
+from pathlib import Path
+import numpy as np
+from apde_data.dataset import parse_labels
+
+image = sample["image"].convert("RGB")  # PIL image, 416 x 416
+mask = sample["mask"].convert("L")      # 0 = background, 255 = patch
+boxes = parse_labels(sample["labels"])
+person_boxes = boxes["person_boxes"]   # pixel-coordinate [x1, y1, x2, y2]
+patch_boxes = boxes["patch_boxes"]
+
+image_array = np.asarray(image, dtype=np.float32) / 255.0  # H x W x 3
+mask_array = (np.asarray(mask) > 0).astype(np.uint8)        # H x W, values 0/1
+
+# Export one sample to ordinary PNG/TXT files.
+image.save("sample.png")
+mask.save("sample_mask.png")
+Path("sample.txt").write_text(sample["labels"], encoding="utf-8")
+```
+
+Each row also includes `id`, `source_id`, `patch_id`, `method`, `detector`, `attack_goal` and `split`. For clean-source rows, parse `person_boxes_json` with `json.loads()`. Apply geometric transforms consistently to images, masks and boxes, and use nearest-neighbor interpolation for masks. Preserve the supplied patch-type split when training and evaluating.
+
+See the official HF [loading guide](https://huggingface.co/docs/datasets/loading) and [download guide](https://huggingface.co/docs/huggingface_hub/guides/download).
 
 ### Directory layout
 

@@ -1,6 +1,6 @@
 # Publishing APDE on Hugging Face
 
-This guide publishes **APDE**. Its 57,000/37,000 patch-disjoint split differs from the paper's 56,400/37,600 split.
+The published dataset is **[Gandolfczjh/APDE](https://huggingface.co/datasets/Gandolfczjh/APDE)**. Download and processing examples are in the repository README. This guide covers exporting and publishing APDE for maintainers. Its 57,000/37,000 patch-disjoint split differs from the paper's 56,400/37,600 split.
 
 ## 1. Prepare an isolated publishing environment
 
@@ -97,4 +97,4 @@ assert len(data["test"]) == 37000
 assert data["test"][0]["image"].size == (416, 416)
 ```
 
-Verify the `patched`, `clean`, and `patches` configurations in the HF viewer, then replace the pending-download notice in both GitHub READMEs with the actual dataset link. The upload tool does not invent a namespace or claim publication before it occurs.
+Verify the `patched`, `clean`, and `patches` configurations in the HF viewer. Both GitHub READMEs link to the published dataset; keep their download examples and counts in sync when updating a release.

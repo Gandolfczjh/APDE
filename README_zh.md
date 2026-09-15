@@ -27,9 +27,9 @@
     - [ ] 集成主流检测器接口 (YOLOv2/3/4/5/7, Faster R-CNN, SSD, CenterNet, ...)。
     - [ ] 提供标准化的鲁棒性评估指标 (mAP under Attack, Attack Success Rate)。
 
-- [ ] **2. APDE 数据集 (APDE Dataset)**
-    - [ ] 发布 **A**dversarial **P**atch **D**efense **E**valuation 数据集下载链接。
-    - [x] 提供重建版数据读取与 Hugging Face 导出工具。
+- [x] **2. APDE 数据集 (APDE Dataset)**
+    - [x] 发布 **A**dversarial **P**atch **D**efense **E**valuation 数据集下载链接。
+    - [x] 提供数据读取、Hugging Face 下载与处理示例，以及导出工具。
 
 - [x] **3. 重训练防御 (Retrained Defense)**
     - [x] 发布重训练防御权重（SAC, Adyolo, NAPGuard）。
@@ -66,7 +66,7 @@ pip install -r requirements.txt
 
 ## APDE 数据集
 
-重建已完成并通过完整性校验：**94 类补丁、94,000 张合成图像**，每张图像均有对应掩码和标注。Hugging Face 下载链接**待发布**，本 Git 仓库存放补丁原图与读取工具，完整合成图像将在 HF 发布。发布步骤见 [HF 上传指南](docs/HUGGINGFACE_RELEASE.md)，版本与来源说明见 [Dataset Card](docs/HF_DATASET_CARD.md)。
+重建已完成并通过完整性校验：**94 类补丁、94,000 张合成图像**，每张图像均有对应掩码和标注。完整数据集已在 **[Hugging Face](https://huggingface.co/datasets/Gandolfczjh/APDE)** 发布，本 Git 仓库存放补丁原图与读取工具。发布步骤见 [HF 上传指南](docs/HUGGINGFACE_RELEASE.md)，版本与来源说明见 [Dataset Card](docs/HF_DATASET_CARD.md)。
 
 | 划分 | 补丁类型 | 合成图像 |
 |---|---:|---:|
@@ -77,6 +77,92 @@ pip install -r requirements.txt
 这是重新制作的数据集，**并非论文原始数据的逐字节恢复**。论文原文为 56,400/37,600 张；本版为保持每类 1,000 张且补丁类型完全隔离，采用 57,000/37,000 划分。不同补丁类型共用 clean 原图，因此训练/测试集保证的是**补丁类型隔离，原始照片并不隔离**。
 
 从 INRIA Test 的 288 张和 COCO val2017 的 2,693 张正样本中，无放回随机抽取 1,000 张（INRIA 81 + COCO 919）；另准备 1,000 张标注中无人的负样本（INRIA 162 + COCO 838）。图像补边缩放至 416×416，掩码为无损二值 PNG（0/255）。TXT 标注格式为 `person x1 y1 x2 y2` 或 `patch x1 y1 x2 y2`，使用像素坐标；补丁框右、下边界不包含在框内。
+
+### 从 Hugging Face 下载与使用 APDE
+
+**数据集：[Gandolfczjh/APDE](https://huggingface.co/datasets/Gandolfczjh/APDE)**
+
+在本代码仓库中安装数据读取依赖：
+
+```bash
+python -m pip install -r requirements-data.txt
+```
+
+| 配置 | 划分 | 内容 |
+|---|---|---|
+| `patched`（默认） | `train`：57,000；`test`：37,000 | 合成图像、二值掩码、TXT 标注与元信息 |
+| `clean` | `positive`：1,000；`negative`：1,000 | clean 原图及人物框 |
+| `patches` | `all`：94 | 补丁原图及训练/测试归属 |
+
+#### 在线加载
+
+```python
+from datasets import load_dataset
+
+data = load_dataset("Gandolfczjh/APDE", "patched")
+assert len(data["train"]) == 57000
+assert len(data["test"]) == 37000
+sample = data["test"][0]
+
+clean = load_dataset("Gandolfczjh/APDE", "clean")
+patches = load_dataset("Gandolfczjh/APDE", "patches", split="all")
+```
+
+首次调用会下载并处理所选配置，后续调用复用 Hugging Face 缓存。若只想先查看样本，可以流式读取，无需等待整个配置下载完成：
+
+```python
+stream = load_dataset("Gandolfczjh/APDE", "patched", split="test", streaming=True)
+sample = next(iter(stream))
+```
+
+#### 完整下载与离线加载
+
+完整发布包包含 97 个 Parquet 文件，约 20 GB；处理缓存或导出图片还需要额外磁盘空间。以下命令在克隆的代码仓库中执行，`APDE` 表示存放数据的子目录：
+
+```bash
+hf download Gandolfczjh/APDE --repo-type dataset --local-dir APDE
+python tools/verify_apde_hf.py APDE
+```
+
+下载中断后，重复执行下载命令即可继续。下载完成后，从本地 Parquet 文件加载：
+
+```python
+from datasets import load_dataset
+
+data = load_dataset("parquet", data_files={
+    "train": "APDE/data/train/*.parquet",
+    "test": "APDE/data/test/*.parquet",
+})
+sample = data["test"][0]
+```
+
+HF 发布包将图片、掩码和标注内嵌在 Parquet 中，包含 `data/train`、`data/test`、`clean` 和 `patches` 目录，与下方原始 PNG/JSONL 目录结构不同。HF 下载文件请用 `load_dataset()` 读取；`APDEDataset("APDE")` 用于包含 `train.jsonl` 和 `test.jsonl` 的原始目录。
+
+#### 处理图片、掩码与标注
+
+```python
+from pathlib import Path
+import numpy as np
+from apde_data.dataset import parse_labels
+
+image = sample["image"].convert("RGB")  # PIL 图像，416 x 416
+mask = sample["mask"].convert("L")      # 0 为背景，255 为补丁
+boxes = parse_labels(sample["labels"])
+person_boxes = boxes["person_boxes"]   # 像素坐标 [x1, y1, x2, y2]
+patch_boxes = boxes["patch_boxes"]
+
+image_array = np.asarray(image, dtype=np.float32) / 255.0  # H x W x 3
+mask_array = (np.asarray(mask) > 0).astype(np.uint8)        # H x W，取值 0/1
+
+# 将一个样本导出为普通 PNG/TXT 文件。
+image.save("sample.png")
+mask.save("sample_mask.png")
+Path("sample.txt").write_text(sample["labels"], encoding="utf-8")
+```
+
+每条合成样本还包含 `id`、`source_id`、`patch_id`、`method`、`detector`、`attack_goal` 和 `split`。clean 样本的人物框保存在 `person_boxes_json`，可用 `json.loads()` 解析。几何变换时须同步处理图片、掩码和框；掩码缩放使用最近邻插值。训练与评估时保留提供的补丁类型划分。
+
+更多用法见 HF 官方[加载文档](https://huggingface.co/docs/datasets/loading)和[下载文档](https://huggingface.co/docs/huggingface_hub/guides/download)。
 
 ### 文件夹结构
 

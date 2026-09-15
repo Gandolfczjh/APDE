@@ -55,12 +55,11 @@ Metadata columns include globally unique `id`, `source_id`, `source_dataset`, `p
 ```python
 from datasets import load_dataset
 
-# Replace YOUR_HF_NAMESPACE with the actual publisher namespace.
-dataset = load_dataset("YOUR_HF_NAMESPACE/APDE", "patched")
+dataset = load_dataset("Gandolfczjh/APDE", "patched")
 sample = dataset["test"][0]
 image, mask, labels = sample["image"], sample["mask"], sample["labels"]
-clean = load_dataset("YOUR_HF_NAMESPACE/APDE", "clean")
-patches = load_dataset("YOUR_HF_NAMESPACE/APDE", "patches", split="all")
+clean = load_dataset("Gandolfczjh/APDE", "clean")
+patches = load_dataset("Gandolfczjh/APDE", "patches", split="all")
 ```
 
 ## Sources and split
