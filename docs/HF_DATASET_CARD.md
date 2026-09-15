@@ -30,7 +30,7 @@ configs:
     path: patches/patches.parquet
 ---
 
-# APDE: September 2026 reconstruction
+# APDE
 
 Dataset for evaluating adversarial patch defenses on object detectors. Related paper:
 [Revisiting Adversarial Patch Defenses on Object Detectors: Unified Evaluation, Large-Scale Dataset, and New Insights](https://arxiv.org/abs/2508.00649), ICCV 2025.
@@ -86,7 +86,7 @@ On the first 100 fixed evaluation sources at confidence 0.5, AA and AdvSticker c
 
 ## Intended use
 
-Reproducible study of patch localization, image restoration, and detector robustness in offline research. Evaluate on the documented split and report the reconstruction version and its limitations.
+Reproducible study of patch localization, image restoration, and detector robustness in offline research. Evaluate on the documented split and report its limitations.
 
 ## Licensing and attribution — publisher action required
 

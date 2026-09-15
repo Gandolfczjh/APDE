@@ -1,6 +1,6 @@
 # Publishing APDE on Hugging Face
 
-This guide publishes the **September 2026 reconstruction**. Its 57,000/37,000 patch-disjoint split differs from the paper's 56,400/37,600 split.
+This guide publishes **APDE**. Its 57,000/37,000 patch-disjoint split differs from the paper's 56,400/37,600 split.
 
 ## 1. Prepare an isolated publishing environment
 
@@ -19,8 +19,8 @@ python -m pip install -r requirements-data.txt
 
 ```bash
 python tools/export_apde_hf.py \
-  --source /path/to/APDE_rebuilt_20260911 \
-  --output /path/to/APDE_hf_release
+  --source APDE \
+  --output hf/APDE
 ```
 
 The source must have a passing 94-type `audit_report.json`. Choose an empty output folder with sufficient disk space (roughly another dataset-sized allocation). This command performs no upload. For interrupted exports, repeat the command with `--resume`: each existing shard is compared against the source before reuse; differing shards are rejected. The exported dataset card is preserved so publisher edits are not lost. Four shards are processed concurrently by default; use `--workers 1` on memory-constrained hosts. Only an export with `export_report.json` containing `complete: true` is ready for release.
@@ -28,7 +28,7 @@ The source must have a passing 94-type `audit_report.json`. Choose an empty outp
 The export contains 97 Parquet files: 57 train shards, 37 test shards, two clean-source shards, and one 94-patch shard. Each image/mask keeps its original PNG bytes. This avoids uploading the raw tree's approximately 282,000 small sample files or duplicating its compatibility symlinks. Source server paths, process logs, environment paths, and checkpoints are excluded.
 
 ```text
-APDE_hf_release/
+APDE/
 ├── README.md                  # HF dataset card; complete publisher fields
 ├── data/train/*.parquet       # 57 shards, 57,000 samples
 ├── data/test/*.parquet        # 37 shards, 37,000 samples
@@ -43,7 +43,7 @@ APDE_hf_release/
 Local smoke check:
 
 ```bash
-python tools/verify_apde_hf.py /path/to/APDE_hf_release
+python tools/verify_apde_hf.py hf/APDE
 ```
 
 This verifies every shard checksum/count and checks Hugging Face image decoding. To load all rows locally:
@@ -52,8 +52,8 @@ This verifies every shard checksum/count and checks Hugging Face image decoding.
 from datasets import load_dataset
 
 data = load_dataset("parquet", data_files={
-    "train": "/path/to/APDE_hf_release/data/train/*.parquet",
-    "test": "/path/to/APDE_hf_release/data/test/*.parquet",
+    "train": "hf/APDE/data/train/*.parquet",
+    "test": "hf/APDE/data/test/*.parquet",
 })
 assert len(data["train"]) == 57000
 assert len(data["test"]) == 37000
@@ -67,7 +67,7 @@ Edit the exported `README.md`:
 
 - Replace `YOUR_HF_NAMESPACE` with your account or organization name.
 - Set the appropriate dataset license metadata and source redistribution/attribution terms. Do not inherit the GitHub code's MIT badge for source photographs automatically.
-- Retain the reconstruction version, split differences, shared source-image caveat, and patch provenance/limitations.
+- Retain the split differences, shared source-image caveat, and patch provenance/limitations.
 
 See the official [dataset card guide](https://huggingface.co/docs/hub/datasets-cards).
 
@@ -79,7 +79,7 @@ Create an account if needed. Generate a token with write permission for your dat
 hf auth login
 hf auth whoami
 hf repos create YOUR_HF_NAMESPACE/APDE --repo-type dataset --private
-hf upload YOUR_HF_NAMESPACE/APDE /path/to/APDE_hf_release --repo-type dataset
+hf upload YOUR_HF_NAMESPACE/APDE hf/APDE --repo-type dataset
 ```
 
 Alternatively create the repository at <https://huggingface.co/new-dataset>. Private staging is recommended while checking the card, license, and viewer. Once ready, switch visibility to public in the dataset repository's Settings. You may create it public initially if all publisher fields are already settled.

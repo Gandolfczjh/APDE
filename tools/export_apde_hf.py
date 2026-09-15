@@ -148,7 +148,7 @@ def export(source, output, resume=False, workers=4):
     if not (output/'README.md').exists():
         (output/'README.md').write_text(card.read_text(encoding='utf-8'), encoding='utf-8')
     (output/'SHA256SUMS').write_text(''.join(f'{value}  {key}\n' for key,value in sorted(checksums.items())))
-    (output/'export_report.json').write_text(json.dumps(dict(complete=True,version='2026-09-reconstruction',
+    (output/'export_report.json').write_text(json.dumps(dict(complete=True,dataset='APDE',
         counts=dict(totals),clean_positive=1000,clean_negative=1000,patches=94,
         parquet_files=len(checksums),source_audit=audit),indent=2))
 

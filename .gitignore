@@ -4,6 +4,5 @@ __pycache__/
 .env
 .env.*
 !.env.example
-APDE_rebuilt_*/
-APDE_hf_release*/
+APDE/
 *.parquet

@@ -64,7 +64,7 @@ pip install -r requirements.txt
 
 ```
 
-## APDE 数据集：2026 年 9 月重建版
+## APDE 数据集
 
 重建已完成并通过完整性校验：**94 类补丁、94,000 张合成图像**，每张图像均有对应掩码和标注。Hugging Face 下载链接**待发布**，本 Git 仓库暂不存放数据文件。发布步骤见 [HF 上传指南](docs/HUGGINGFACE_RELEASE.md)，版本与来源说明见 [Dataset Card](docs/HF_DATASET_CARD.md)。
 
@@ -81,7 +81,7 @@ pip install -r requirements.txt
 ### 文件夹结构
 
 ```text
-APDE_rebuilt_20260911/
+APDE/
 ├── clean/
 │   ├── positive/{images,labels}/        # 1,000 张 clean 正样本
 │   └── negative/{images,labels}/        # 1,000 张 clean 负样本
@@ -122,7 +122,7 @@ python -m pip install Pillow
 ```python
 from apde_data import APDEDataset
 
-data = APDEDataset("/path/to/APDE_rebuilt_20260911", split="test")
+data = APDEDataset("APDE", split="test")
 sample = data[0]
 image, mask = sample["image"], sample["mask"]  # RGB / L 模式 PIL 图像
 person_boxes, patch_boxes = sample["person_boxes"], sample["patch_boxes"]

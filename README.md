@@ -59,7 +59,7 @@ conda activate APDE
 pip install -r requirements.txt
 ```
 
-## APDE dataset — September 2026 reconstruction
+## APDE dataset
 
 The reconstructed dataset is complete and validated: **94 patch types, 94,000 patched images**, with one mask and annotation file per image. The Hugging Face download link is **pending publication**; no dataset is hosted in this Git repository yet. See the [publishing guide](docs/HUGGINGFACE_RELEASE.md) and [dataset card](docs/HF_DATASET_CARD.md).
 
@@ -76,7 +76,7 @@ The source pool contains 1,000 positives (81 INRIA Test + 919 COCO val2017) samp
 ### Directory layout
 
 ```text
-APDE_rebuilt_20260911/
+APDE/
 ├── clean/
 │   ├── positive/{images,labels}/        # 1,000 clean positive samples
 │   └── negative/{images,labels}/        # 1,000 clean negative samples
@@ -117,7 +117,7 @@ python -m pip install Pillow
 ```python
 from apde_data import APDEDataset
 
-data = APDEDataset("/path/to/APDE_rebuilt_20260911", split="test")
+data = APDEDataset("APDE", split="test")
 sample = data[0]
 image, mask = sample["image"], sample["mask"]  # RGB / L PIL images
 person_boxes, patch_boxes = sample["person_boxes"], sample["patch_boxes"]
