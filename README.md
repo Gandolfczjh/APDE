@@ -61,7 +61,7 @@ pip install -r requirements.txt
 
 ## APDE dataset
 
-The reconstructed dataset is complete and validated: **94 patch types, 94,000 patched images**, with one mask and annotation file per image. The Hugging Face download link is **pending publication**; no dataset is hosted in this Git repository yet. See the [publishing guide](docs/HUGGINGFACE_RELEASE.md) and [dataset card](docs/HF_DATASET_CARD.md).
+The reconstructed dataset is complete and validated: **94 patch types, 94,000 patched images**, with one mask and annotation file per image. The Hugging Face download link is **pending publication**; this Git repository includes the patch originals and reader tools; the full synthesized images will be hosted on HF. See the [publishing guide](docs/HUGGINGFACE_RELEASE.md) and [dataset card](docs/HF_DATASET_CARD.md).
 
 | Split | Patch types | Patched images |
 |---|---:|---:|
@@ -107,6 +107,187 @@ APDE/
 The eight matrix families (`advpatch`, `TCEGA`, `tsea-pgd`, `tsea-mim`, `TCA`, `tsea`, `GNAP`, `DM-NAP`) each cover 11 detectors: `yolov2`, `yolov3`, `yolov4`, `yolov5`, `yolov7`, `ssd`, `centernet`, `retinanet`, `mask_rcnn`, `faster_rcnn`, `ddetr`.
 
 The remaining six types are **test-only**: `AdvCloak/yolov2`, `AdvCloak/yolov3`, `AdvTshirt/yolov2`, `AA/yolov2`, `AdvSticker/yolov3`, and `UPC/yolov3`. The train/test JSONL manifests define the split; there are no duplicated train/test image directories.
+
+<!-- APDE patch gallery -->
+
+### Gallery of all 94 patches
+
+All previews use a height of 96 pixels and preserve their original aspect ratios. Click a patch to view the original. Each caption identifies the detector and train/test assignment.
+
+#### AdvPatch
+
+<table>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/advpatch/yolov2.png"><img src="assets/patches/advpatch/yolov2.png" alt="advpatch/yolov2 patch" width="96" height="96"></a><br><sub>YOLOv2<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/advpatch/yolov3.png"><img src="assets/patches/advpatch/yolov3.png" alt="advpatch/yolov3 patch" width="96" height="96"></a><br><sub>YOLOv3<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/advpatch/yolov4.png"><img src="assets/patches/advpatch/yolov4.png" alt="advpatch/yolov4 patch" width="96" height="96"></a><br><sub>YOLOv4<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/advpatch/yolov5.png"><img src="assets/patches/advpatch/yolov5.png" alt="advpatch/yolov5 patch" width="96" height="96"></a><br><sub>YOLOv5<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/advpatch/yolov7.png"><img src="assets/patches/advpatch/yolov7.png" alt="advpatch/yolov7 patch" width="96" height="96"></a><br><sub>YOLOv7<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/advpatch/ssd.png"><img src="assets/patches/advpatch/ssd.png" alt="advpatch/ssd patch" width="96" height="96"></a><br><sub>SSD<br>Train</sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/advpatch/centernet.png"><img src="assets/patches/advpatch/centernet.png" alt="advpatch/centernet patch" width="96" height="96"></a><br><sub>CenterNet<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/advpatch/retinanet.png"><img src="assets/patches/advpatch/retinanet.png" alt="advpatch/retinanet patch" width="96" height="96"></a><br><sub>RetinaNet<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/advpatch/mask_rcnn.png"><img src="assets/patches/advpatch/mask_rcnn.png" alt="advpatch/mask_rcnn patch" width="96" height="96"></a><br><sub>Mask R-CNN<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/advpatch/faster_rcnn.png"><img src="assets/patches/advpatch/faster_rcnn.png" alt="advpatch/faster_rcnn patch" width="96" height="96"></a><br><sub>Faster R-CNN<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/advpatch/ddetr.png"><img src="assets/patches/advpatch/ddetr.png" alt="advpatch/ddetr patch" width="96" height="96"></a><br><sub>D-DETR<br>Test</sub></td>
+  </tr>
+</table>
+
+#### TC-EGA
+
+<table>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/TCEGA/yolov2.png"><img src="assets/patches/TCEGA/yolov2.png" alt="TCEGA/yolov2 patch" width="96" height="96"></a><br><sub>YOLOv2<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCEGA/yolov3.png"><img src="assets/patches/TCEGA/yolov3.png" alt="TCEGA/yolov3 patch" width="96" height="96"></a><br><sub>YOLOv3<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCEGA/yolov4.png"><img src="assets/patches/TCEGA/yolov4.png" alt="TCEGA/yolov4 patch" width="96" height="96"></a><br><sub>YOLOv4<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCEGA/yolov5.png"><img src="assets/patches/TCEGA/yolov5.png" alt="TCEGA/yolov5 patch" width="96" height="96"></a><br><sub>YOLOv5<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCEGA/yolov7.png"><img src="assets/patches/TCEGA/yolov7.png" alt="TCEGA/yolov7 patch" width="96" height="96"></a><br><sub>YOLOv7<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCEGA/ssd.png"><img src="assets/patches/TCEGA/ssd.png" alt="TCEGA/ssd patch" width="96" height="96"></a><br><sub>SSD<br>Train</sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/TCEGA/centernet.png"><img src="assets/patches/TCEGA/centernet.png" alt="TCEGA/centernet patch" width="96" height="96"></a><br><sub>CenterNet<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCEGA/retinanet.png"><img src="assets/patches/TCEGA/retinanet.png" alt="TCEGA/retinanet patch" width="96" height="96"></a><br><sub>RetinaNet<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCEGA/mask_rcnn.png"><img src="assets/patches/TCEGA/mask_rcnn.png" alt="TCEGA/mask_rcnn patch" width="96" height="96"></a><br><sub>Mask R-CNN<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCEGA/faster_rcnn.png"><img src="assets/patches/TCEGA/faster_rcnn.png" alt="TCEGA/faster_rcnn patch" width="96" height="96"></a><br><sub>Faster R-CNN<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCEGA/ddetr.png"><img src="assets/patches/TCEGA/ddetr.png" alt="TCEGA/ddetr patch" width="96" height="96"></a><br><sub>D-DETR<br>Test</sub></td>
+  </tr>
+</table>
+
+#### T-SEA-PGD
+
+<table>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/tsea-pgd/yolov2.png"><img src="assets/patches/tsea-pgd/yolov2.png" alt="tsea-pgd/yolov2 patch" width="96" height="96"></a><br><sub>YOLOv2<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-pgd/yolov3.png"><img src="assets/patches/tsea-pgd/yolov3.png" alt="tsea-pgd/yolov3 patch" width="96" height="96"></a><br><sub>YOLOv3<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-pgd/yolov4.png"><img src="assets/patches/tsea-pgd/yolov4.png" alt="tsea-pgd/yolov4 patch" width="96" height="96"></a><br><sub>YOLOv4<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-pgd/yolov5.png"><img src="assets/patches/tsea-pgd/yolov5.png" alt="tsea-pgd/yolov5 patch" width="96" height="96"></a><br><sub>YOLOv5<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-pgd/yolov7.png"><img src="assets/patches/tsea-pgd/yolov7.png" alt="tsea-pgd/yolov7 patch" width="96" height="96"></a><br><sub>YOLOv7<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-pgd/ssd.png"><img src="assets/patches/tsea-pgd/ssd.png" alt="tsea-pgd/ssd patch" width="96" height="96"></a><br><sub>SSD<br>Train</sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/tsea-pgd/centernet.png"><img src="assets/patches/tsea-pgd/centernet.png" alt="tsea-pgd/centernet patch" width="96" height="96"></a><br><sub>CenterNet<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-pgd/retinanet.png"><img src="assets/patches/tsea-pgd/retinanet.png" alt="tsea-pgd/retinanet patch" width="96" height="96"></a><br><sub>RetinaNet<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-pgd/mask_rcnn.png"><img src="assets/patches/tsea-pgd/mask_rcnn.png" alt="tsea-pgd/mask_rcnn patch" width="96" height="96"></a><br><sub>Mask R-CNN<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-pgd/faster_rcnn.png"><img src="assets/patches/tsea-pgd/faster_rcnn.png" alt="tsea-pgd/faster_rcnn patch" width="96" height="96"></a><br><sub>Faster R-CNN<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-pgd/ddetr.png"><img src="assets/patches/tsea-pgd/ddetr.png" alt="tsea-pgd/ddetr patch" width="96" height="96"></a><br><sub>D-DETR<br>Train</sub></td>
+  </tr>
+</table>
+
+#### T-SEA-MIM
+
+<table>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/tsea-mim/yolov2.png"><img src="assets/patches/tsea-mim/yolov2.png" alt="tsea-mim/yolov2 patch" width="96" height="96"></a><br><sub>YOLOv2<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-mim/yolov3.png"><img src="assets/patches/tsea-mim/yolov3.png" alt="tsea-mim/yolov3 patch" width="96" height="96"></a><br><sub>YOLOv3<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-mim/yolov4.png"><img src="assets/patches/tsea-mim/yolov4.png" alt="tsea-mim/yolov4 patch" width="96" height="96"></a><br><sub>YOLOv4<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-mim/yolov5.png"><img src="assets/patches/tsea-mim/yolov5.png" alt="tsea-mim/yolov5 patch" width="96" height="96"></a><br><sub>YOLOv5<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-mim/yolov7.png"><img src="assets/patches/tsea-mim/yolov7.png" alt="tsea-mim/yolov7 patch" width="96" height="96"></a><br><sub>YOLOv7<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-mim/ssd.png"><img src="assets/patches/tsea-mim/ssd.png" alt="tsea-mim/ssd patch" width="96" height="96"></a><br><sub>SSD<br>Train</sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/tsea-mim/centernet.png"><img src="assets/patches/tsea-mim/centernet.png" alt="tsea-mim/centernet patch" width="96" height="96"></a><br><sub>CenterNet<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-mim/retinanet.png"><img src="assets/patches/tsea-mim/retinanet.png" alt="tsea-mim/retinanet patch" width="96" height="96"></a><br><sub>RetinaNet<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-mim/mask_rcnn.png"><img src="assets/patches/tsea-mim/mask_rcnn.png" alt="tsea-mim/mask_rcnn patch" width="96" height="96"></a><br><sub>Mask R-CNN<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-mim/faster_rcnn.png"><img src="assets/patches/tsea-mim/faster_rcnn.png" alt="tsea-mim/faster_rcnn patch" width="96" height="96"></a><br><sub>Faster R-CNN<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea-mim/ddetr.png"><img src="assets/patches/tsea-mim/ddetr.png" alt="tsea-mim/ddetr patch" width="96" height="96"></a><br><sub>D-DETR<br>Test</sub></td>
+  </tr>
+</table>
+
+#### TCA
+
+<table>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/TCA/yolov2.png"><img src="assets/patches/TCA/yolov2.png" alt="TCA/yolov2 patch" width="96" height="96"></a><br><sub>YOLOv2<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCA/yolov3.png"><img src="assets/patches/TCA/yolov3.png" alt="TCA/yolov3 patch" width="96" height="96"></a><br><sub>YOLOv3<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCA/yolov4.png"><img src="assets/patches/TCA/yolov4.png" alt="TCA/yolov4 patch" width="96" height="96"></a><br><sub>YOLOv4<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCA/yolov5.png"><img src="assets/patches/TCA/yolov5.png" alt="TCA/yolov5 patch" width="96" height="96"></a><br><sub>YOLOv5<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCA/yolov7.png"><img src="assets/patches/TCA/yolov7.png" alt="TCA/yolov7 patch" width="96" height="96"></a><br><sub>YOLOv7<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCA/ssd.png"><img src="assets/patches/TCA/ssd.png" alt="TCA/ssd patch" width="96" height="96"></a><br><sub>SSD<br>Test</sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/TCA/centernet.png"><img src="assets/patches/TCA/centernet.png" alt="TCA/centernet patch" width="96" height="96"></a><br><sub>CenterNet<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCA/retinanet.png"><img src="assets/patches/TCA/retinanet.png" alt="TCA/retinanet patch" width="96" height="96"></a><br><sub>RetinaNet<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCA/mask_rcnn.png"><img src="assets/patches/TCA/mask_rcnn.png" alt="TCA/mask_rcnn patch" width="96" height="96"></a><br><sub>Mask R-CNN<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCA/faster_rcnn.png"><img src="assets/patches/TCA/faster_rcnn.png" alt="TCA/faster_rcnn patch" width="96" height="96"></a><br><sub>Faster R-CNN<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/TCA/ddetr.png"><img src="assets/patches/TCA/ddetr.png" alt="TCA/ddetr patch" width="96" height="96"></a><br><sub>D-DETR<br>Test</sub></td>
+  </tr>
+</table>
+
+#### T-SEA
+
+<table>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/tsea/yolov2.png"><img src="assets/patches/tsea/yolov2.png" alt="tsea/yolov2 patch" width="96" height="96"></a><br><sub>YOLOv2<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea/yolov3.png"><img src="assets/patches/tsea/yolov3.png" alt="tsea/yolov3 patch" width="96" height="96"></a><br><sub>YOLOv3<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea/yolov4.png"><img src="assets/patches/tsea/yolov4.png" alt="tsea/yolov4 patch" width="96" height="96"></a><br><sub>YOLOv4<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea/yolov5.png"><img src="assets/patches/tsea/yolov5.png" alt="tsea/yolov5 patch" width="96" height="96"></a><br><sub>YOLOv5<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea/yolov7.png"><img src="assets/patches/tsea/yolov7.png" alt="tsea/yolov7 patch" width="96" height="96"></a><br><sub>YOLOv7<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea/ssd.png"><img src="assets/patches/tsea/ssd.png" alt="tsea/ssd patch" width="96" height="96"></a><br><sub>SSD<br>Train</sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/tsea/centernet.png"><img src="assets/patches/tsea/centernet.png" alt="tsea/centernet patch" width="96" height="96"></a><br><sub>CenterNet<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea/retinanet.png"><img src="assets/patches/tsea/retinanet.png" alt="tsea/retinanet patch" width="96" height="96"></a><br><sub>RetinaNet<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea/mask_rcnn.png"><img src="assets/patches/tsea/mask_rcnn.png" alt="tsea/mask_rcnn patch" width="96" height="96"></a><br><sub>Mask R-CNN<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea/faster_rcnn.png"><img src="assets/patches/tsea/faster_rcnn.png" alt="tsea/faster_rcnn patch" width="96" height="96"></a><br><sub>Faster R-CNN<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/tsea/ddetr.png"><img src="assets/patches/tsea/ddetr.png" alt="tsea/ddetr patch" width="96" height="96"></a><br><sub>D-DETR<br>Train</sub></td>
+  </tr>
+</table>
+
+#### GNAP
+
+<table>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/GNAP/yolov2.png"><img src="assets/patches/GNAP/yolov2.png" alt="GNAP/yolov2 patch" width="96" height="96"></a><br><sub>YOLOv2<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/GNAP/yolov3.png"><img src="assets/patches/GNAP/yolov3.png" alt="GNAP/yolov3 patch" width="96" height="96"></a><br><sub>YOLOv3<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/GNAP/yolov4.png"><img src="assets/patches/GNAP/yolov4.png" alt="GNAP/yolov4 patch" width="96" height="96"></a><br><sub>YOLOv4<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/GNAP/yolov5.png"><img src="assets/patches/GNAP/yolov5.png" alt="GNAP/yolov5 patch" width="96" height="96"></a><br><sub>YOLOv5<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/GNAP/yolov7.png"><img src="assets/patches/GNAP/yolov7.png" alt="GNAP/yolov7 patch" width="96" height="96"></a><br><sub>YOLOv7<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/GNAP/ssd.png"><img src="assets/patches/GNAP/ssd.png" alt="GNAP/ssd patch" width="96" height="96"></a><br><sub>SSD<br>Test</sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/GNAP/centernet.png"><img src="assets/patches/GNAP/centernet.png" alt="GNAP/centernet patch" width="96" height="96"></a><br><sub>CenterNet<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/GNAP/retinanet.png"><img src="assets/patches/GNAP/retinanet.png" alt="GNAP/retinanet patch" width="96" height="96"></a><br><sub>RetinaNet<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/GNAP/mask_rcnn.png"><img src="assets/patches/GNAP/mask_rcnn.png" alt="GNAP/mask_rcnn patch" width="96" height="96"></a><br><sub>Mask R-CNN<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/GNAP/faster_rcnn.png"><img src="assets/patches/GNAP/faster_rcnn.png" alt="GNAP/faster_rcnn patch" width="96" height="96"></a><br><sub>Faster R-CNN<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/GNAP/ddetr.png"><img src="assets/patches/GNAP/ddetr.png" alt="GNAP/ddetr patch" width="96" height="96"></a><br><sub>D-DETR<br>Test</sub></td>
+  </tr>
+</table>
+
+#### DM-NAP
+
+<table>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/DM-NAP/yolov2.png"><img src="assets/patches/DM-NAP/yolov2.png" alt="DM-NAP/yolov2 patch" width="96" height="96"></a><br><sub>YOLOv2<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/DM-NAP/yolov3.png"><img src="assets/patches/DM-NAP/yolov3.png" alt="DM-NAP/yolov3 patch" width="96" height="96"></a><br><sub>YOLOv3<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/DM-NAP/yolov4.png"><img src="assets/patches/DM-NAP/yolov4.png" alt="DM-NAP/yolov4 patch" width="96" height="96"></a><br><sub>YOLOv4<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/DM-NAP/yolov5.png"><img src="assets/patches/DM-NAP/yolov5.png" alt="DM-NAP/yolov5 patch" width="96" height="96"></a><br><sub>YOLOv5<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/DM-NAP/yolov7.png"><img src="assets/patches/DM-NAP/yolov7.png" alt="DM-NAP/yolov7 patch" width="96" height="96"></a><br><sub>YOLOv7<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/DM-NAP/ssd.png"><img src="assets/patches/DM-NAP/ssd.png" alt="DM-NAP/ssd patch" width="96" height="96"></a><br><sub>SSD<br>Test</sub></td>
+  </tr>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/DM-NAP/centernet.png"><img src="assets/patches/DM-NAP/centernet.png" alt="DM-NAP/centernet patch" width="96" height="96"></a><br><sub>CenterNet<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/DM-NAP/retinanet.png"><img src="assets/patches/DM-NAP/retinanet.png" alt="DM-NAP/retinanet patch" width="96" height="96"></a><br><sub>RetinaNet<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/DM-NAP/mask_rcnn.png"><img src="assets/patches/DM-NAP/mask_rcnn.png" alt="DM-NAP/mask_rcnn patch" width="96" height="96"></a><br><sub>Mask R-CNN<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/DM-NAP/faster_rcnn.png"><img src="assets/patches/DM-NAP/faster_rcnn.png" alt="DM-NAP/faster_rcnn patch" width="96" height="96"></a><br><sub>Faster R-CNN<br>Train</sub></td>
+    <td align="center" width="120"><a href="assets/patches/DM-NAP/ddetr.png"><img src="assets/patches/DM-NAP/ddetr.png" alt="DM-NAP/ddetr patch" width="96" height="96"></a><br><sub>D-DETR<br>Train</sub></td>
+  </tr>
+</table>
+
+#### Six test-only patches
+
+<table>
+  <tr>
+    <td align="center" width="120"><a href="assets/patches/AdvCloak/yolov2.png"><img src="assets/patches/AdvCloak/yolov2.png" alt="AdvCloak/yolov2 patch" width="59" height="96"></a><br><sub>AdvCloak / YOLOv2<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/AdvCloak/yolov3.png"><img src="assets/patches/AdvCloak/yolov3.png" alt="AdvCloak/yolov3 patch" width="58" height="96"></a><br><sub>AdvCloak / YOLOv3<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/AdvTshirt/yolov2.png"><img src="assets/patches/AdvTshirt/yolov2.png" alt="AdvTshirt/yolov2 patch" width="59" height="96"></a><br><sub>AdvTshirt / YOLOv2<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/AA/yolov2.png"><img src="assets/patches/AA/yolov2.png" alt="AA/yolov2 patch" width="96" height="96"></a><br><sub>AA / YOLOv2<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/AdvSticker/yolov3.png"><img src="assets/patches/AdvSticker/yolov3.png" alt="AdvSticker/yolov3 patch" width="96" height="96"></a><br><sub>AdvSticker / YOLOv3<br>Test</sub></td>
+    <td align="center" width="120"><a href="assets/patches/UPC/yolov3.png"><img src="assets/patches/UPC/yolov3.png" alt="UPC/yolov3 patch" width="96" height="96"></a><br><sub>UPC / YOLOv3<br>Test</sub></td>
+  </tr>
+</table>
+
+<!-- /APDE patch gallery -->
 
 ### Read the local dataset
 

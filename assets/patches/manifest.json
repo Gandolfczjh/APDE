@@ -1,0 +1,566 @@
+[
+  {
+    "patch_id": "advpatch/yolov2",
+    "split": "test",
+    "file": "assets/patches/advpatch/yolov2.png",
+    "sha256": "5db8e9559a3d1ab7b088989d54699f49adc6cd7ae95bc50b0fba9c4dd18cd7a3"
+  },
+  {
+    "patch_id": "advpatch/yolov3",
+    "split": "test",
+    "file": "assets/patches/advpatch/yolov3.png",
+    "sha256": "bab097070261068579a7e2dedd55d186c757dde77d81671672eea4f62178abf0"
+  },
+  {
+    "patch_id": "advpatch/yolov4",
+    "split": "train",
+    "file": "assets/patches/advpatch/yolov4.png",
+    "sha256": "76fd65eaff2bca4f9d331d0bdd5dad9fa60b1513c63c689ead8959ca53a32ae8"
+  },
+  {
+    "patch_id": "advpatch/yolov5",
+    "split": "train",
+    "file": "assets/patches/advpatch/yolov5.png",
+    "sha256": "43538a666cb4eeddf1d1ae6bab2cdc6720e6a0c96c5fa2b5b2123a1e98c66eba"
+  },
+  {
+    "patch_id": "advpatch/yolov7",
+    "split": "train",
+    "file": "assets/patches/advpatch/yolov7.png",
+    "sha256": "cc487385d3d2389d2a0ee788fe2f05b690669d2435a8539051b5fe35543ad92f"
+  },
+  {
+    "patch_id": "advpatch/ssd",
+    "split": "train",
+    "file": "assets/patches/advpatch/ssd.png",
+    "sha256": "aabb5b90a45e01bbe88818f3017ac5b67f00c5b9295d29a2f2473ead4c9435c5"
+  },
+  {
+    "patch_id": "advpatch/centernet",
+    "split": "train",
+    "file": "assets/patches/advpatch/centernet.png",
+    "sha256": "a18c871bbfe016d57cfad916ddf28896fe1c54af82c3d8a649edf884b47ff5e0"
+  },
+  {
+    "patch_id": "advpatch/retinanet",
+    "split": "train",
+    "file": "assets/patches/advpatch/retinanet.png",
+    "sha256": "efa642ee6c84e75a7f051615d01abd7cf5e3a4160ba2ed6af8a930c954830870"
+  },
+  {
+    "patch_id": "advpatch/mask_rcnn",
+    "split": "test",
+    "file": "assets/patches/advpatch/mask_rcnn.png",
+    "sha256": "645ea67322ed9adac7569c1f07e6c856725407126c524e6aab29831c9778e502"
+  },
+  {
+    "patch_id": "advpatch/faster_rcnn",
+    "split": "train",
+    "file": "assets/patches/advpatch/faster_rcnn.png",
+    "sha256": "0331ea1d0b1534b8ff1f4481402c1213645ee7ab68de615e982ec440c961cb08"
+  },
+  {
+    "patch_id": "advpatch/ddetr",
+    "split": "test",
+    "file": "assets/patches/advpatch/ddetr.png",
+    "sha256": "98b95c9dbef9917c69285cad83b4807dc5855252de435599bcee45122802c4ee"
+  },
+  {
+    "patch_id": "TCEGA/yolov2",
+    "split": "train",
+    "file": "assets/patches/TCEGA/yolov2.png",
+    "sha256": "9a23bfe1d8d95b76400e59e44f6d34d1f4477b534268030e61e9579b3ee672aa"
+  },
+  {
+    "patch_id": "TCEGA/yolov3",
+    "split": "train",
+    "file": "assets/patches/TCEGA/yolov3.png",
+    "sha256": "0eac05b16d73b80860708baee3f6cd6fc3cdb53619498d642330415f28e6d13c"
+  },
+  {
+    "patch_id": "TCEGA/yolov4",
+    "split": "train",
+    "file": "assets/patches/TCEGA/yolov4.png",
+    "sha256": "1d7c31d27adf9703773a4bfe4b769a723aff5b9b77358f3875da5580f84ebe0d"
+  },
+  {
+    "patch_id": "TCEGA/yolov5",
+    "split": "train",
+    "file": "assets/patches/TCEGA/yolov5.png",
+    "sha256": "d1212c5cdb07172cfb54eaaf1b7720a12bcabbe7c76ece2cf90b1af27b79b1cd"
+  },
+  {
+    "patch_id": "TCEGA/yolov7",
+    "split": "test",
+    "file": "assets/patches/TCEGA/yolov7.png",
+    "sha256": "43de474fcd584bd194ee2c02a0026148d410896c720d6d5ca6cd852da127a29a"
+  },
+  {
+    "patch_id": "TCEGA/ssd",
+    "split": "train",
+    "file": "assets/patches/TCEGA/ssd.png",
+    "sha256": "c09974c7611dc587e214a47f9ae361c9c5509f61a185aa8241e361629d81b14b"
+  },
+  {
+    "patch_id": "TCEGA/centernet",
+    "split": "test",
+    "file": "assets/patches/TCEGA/centernet.png",
+    "sha256": "28667966acdcf7a849b25fee3ffe925b9558768d2ff07c24d019ce79d3c86d42"
+  },
+  {
+    "patch_id": "TCEGA/retinanet",
+    "split": "test",
+    "file": "assets/patches/TCEGA/retinanet.png",
+    "sha256": "ae2b555a53a20fc8c72fb2407b241f0157b4fd040aa9f4961d06d369539b7b93"
+  },
+  {
+    "patch_id": "TCEGA/mask_rcnn",
+    "split": "train",
+    "file": "assets/patches/TCEGA/mask_rcnn.png",
+    "sha256": "a2fb9f68ebf192bfb4d766b9eeb67192a3458d5fff39afa1f1d5068e4d1be735"
+  },
+  {
+    "patch_id": "TCEGA/faster_rcnn",
+    "split": "train",
+    "file": "assets/patches/TCEGA/faster_rcnn.png",
+    "sha256": "5e2a78446f890ceef3fd7bfa101ee7e75497220022abfcada77844019f65079b"
+  },
+  {
+    "patch_id": "TCEGA/ddetr",
+    "split": "test",
+    "file": "assets/patches/TCEGA/ddetr.png",
+    "sha256": "ff754078233ed02791a8054dee16092afa40fbcccaaaa02ebb0070f50cc251e4"
+  },
+  {
+    "patch_id": "tsea-pgd/yolov2",
+    "split": "train",
+    "file": "assets/patches/tsea-pgd/yolov2.png",
+    "sha256": "2f0367d5bec0c304e979efe9bb13abf4661ec95a3d6d05330d8f8e963c62621b"
+  },
+  {
+    "patch_id": "tsea-pgd/yolov3",
+    "split": "train",
+    "file": "assets/patches/tsea-pgd/yolov3.png",
+    "sha256": "bc28dbb10050476923920b4b0d9c41565f08a2e7b086404c8e065be5795de3d5"
+  },
+  {
+    "patch_id": "tsea-pgd/yolov4",
+    "split": "train",
+    "file": "assets/patches/tsea-pgd/yolov4.png",
+    "sha256": "ac4c371fa9ab6cb44e10ab556f808f242afbfc89d243f05c04a47fe907f1ad64"
+  },
+  {
+    "patch_id": "tsea-pgd/yolov5",
+    "split": "test",
+    "file": "assets/patches/tsea-pgd/yolov5.png",
+    "sha256": "1a21771157582f6d9d3016771a9fd8a40951ee82fe5ff2b0867f291cc6fafa7a"
+  },
+  {
+    "patch_id": "tsea-pgd/yolov7",
+    "split": "test",
+    "file": "assets/patches/tsea-pgd/yolov7.png",
+    "sha256": "b28d49db5b0120a65b9927f385909523acec88142f20c460101e5bbb65afd73e"
+  },
+  {
+    "patch_id": "tsea-pgd/ssd",
+    "split": "train",
+    "file": "assets/patches/tsea-pgd/ssd.png",
+    "sha256": "6e99f63fa8b97d754259ed3863e42aab40987ff6c70057907c7b453d0c8ef163"
+  },
+  {
+    "patch_id": "tsea-pgd/centernet",
+    "split": "test",
+    "file": "assets/patches/tsea-pgd/centernet.png",
+    "sha256": "e21527f1919c2f6a27c1cef9378a6536517516d52a0b49fc8b0a43d4f528df5f"
+  },
+  {
+    "patch_id": "tsea-pgd/retinanet",
+    "split": "train",
+    "file": "assets/patches/tsea-pgd/retinanet.png",
+    "sha256": "fa615f889efc71dced55a7c63e392e9f7fd8b8f96c8210c6316e3b94aa031740"
+  },
+  {
+    "patch_id": "tsea-pgd/mask_rcnn",
+    "split": "train",
+    "file": "assets/patches/tsea-pgd/mask_rcnn.png",
+    "sha256": "5613133a2d6d8866598d44558b5c0be8899eccb169a860a29a1356a24caebb2e"
+  },
+  {
+    "patch_id": "tsea-pgd/faster_rcnn",
+    "split": "train",
+    "file": "assets/patches/tsea-pgd/faster_rcnn.png",
+    "sha256": "da95d6c7da8bb5ad5ccb151e0416ae9e1f26b6babb1172f68c977f9125f5e33c"
+  },
+  {
+    "patch_id": "tsea-pgd/ddetr",
+    "split": "train",
+    "file": "assets/patches/tsea-pgd/ddetr.png",
+    "sha256": "1701c0f0f6d8e8f9e1765d50ea1d2fb8f0fc4f9dccc35212f1bcfe85151913cd"
+  },
+  {
+    "patch_id": "tsea-mim/yolov2",
+    "split": "train",
+    "file": "assets/patches/tsea-mim/yolov2.png",
+    "sha256": "8f42a9ab0df3fc06995caac4ae6f6331b8ea096e14159a1dd8af210661fb2350"
+  },
+  {
+    "patch_id": "tsea-mim/yolov3",
+    "split": "train",
+    "file": "assets/patches/tsea-mim/yolov3.png",
+    "sha256": "1cfcf62e487527de92f25b459210d05c29c35545faae39297b782da6ed448701"
+  },
+  {
+    "patch_id": "tsea-mim/yolov4",
+    "split": "test",
+    "file": "assets/patches/tsea-mim/yolov4.png",
+    "sha256": "70aa94604becf2b5e505d1941e56b0eaf2fbd4b541591b8f1de3cf376853f865"
+  },
+  {
+    "patch_id": "tsea-mim/yolov5",
+    "split": "test",
+    "file": "assets/patches/tsea-mim/yolov5.png",
+    "sha256": "8b23172995f5d995169cdb78d7501cae3dca74e71ddc9f893da1b34593154b58"
+  },
+  {
+    "patch_id": "tsea-mim/yolov7",
+    "split": "train",
+    "file": "assets/patches/tsea-mim/yolov7.png",
+    "sha256": "f0d1ab1f40d185a8ecdc1fa780f9d4ee09cd162da5a02ef4ce4d1221544a0e11"
+  },
+  {
+    "patch_id": "tsea-mim/ssd",
+    "split": "train",
+    "file": "assets/patches/tsea-mim/ssd.png",
+    "sha256": "0936d2fc3de89b5d123561e9f665376c20b6ba22d2103bb67e596c92cbd55051"
+  },
+  {
+    "patch_id": "tsea-mim/centernet",
+    "split": "train",
+    "file": "assets/patches/tsea-mim/centernet.png",
+    "sha256": "4488bea390c46d4cb06f8f24b7d77a9a247ffd5d2e86769df3381ced7eda7615"
+  },
+  {
+    "patch_id": "tsea-mim/retinanet",
+    "split": "train",
+    "file": "assets/patches/tsea-mim/retinanet.png",
+    "sha256": "fbba3db9821ec95ae49efe9dffd44b428cc7627dd20685118591eadb36a3a5f2"
+  },
+  {
+    "patch_id": "tsea-mim/mask_rcnn",
+    "split": "test",
+    "file": "assets/patches/tsea-mim/mask_rcnn.png",
+    "sha256": "fe7d2b74f1b6c9e1740155a474a1a0648d4b7fee4bdbbc278c52f2a9760e8a52"
+  },
+  {
+    "patch_id": "tsea-mim/faster_rcnn",
+    "split": "train",
+    "file": "assets/patches/tsea-mim/faster_rcnn.png",
+    "sha256": "f3d00695d24fa43c2c09a8e08dd7767856ed63c6785644c3b5beebdab47e7e02"
+  },
+  {
+    "patch_id": "tsea-mim/ddetr",
+    "split": "test",
+    "file": "assets/patches/tsea-mim/ddetr.png",
+    "sha256": "14416d9655ca3e5d70271a4f43a0cacdb93dfdbffa98c8fb2eef079d0ae63496"
+  },
+  {
+    "patch_id": "TCA/yolov2",
+    "split": "train",
+    "file": "assets/patches/TCA/yolov2.png",
+    "sha256": "528c732894ed0dbd1113cf33da3e14e6cab808037e3ca53ec6677ef00c077692"
+  },
+  {
+    "patch_id": "TCA/yolov3",
+    "split": "train",
+    "file": "assets/patches/TCA/yolov3.png",
+    "sha256": "a5ed9804b0b7a9b4a0ce5c28bf3290d36b9e929af316e070c9a6799257c08611"
+  },
+  {
+    "patch_id": "TCA/yolov4",
+    "split": "test",
+    "file": "assets/patches/TCA/yolov4.png",
+    "sha256": "78345d79e894aadd22743dbaa71521566850f818aa49a1e61b51ee6e9a3681f6"
+  },
+  {
+    "patch_id": "TCA/yolov5",
+    "split": "train",
+    "file": "assets/patches/TCA/yolov5.png",
+    "sha256": "32114cf294f1101454144f39d7940492c8ce698b2143dee63ce43c1e54a7d635"
+  },
+  {
+    "patch_id": "TCA/yolov7",
+    "split": "train",
+    "file": "assets/patches/TCA/yolov7.png",
+    "sha256": "8299997938ad17fa6425dc277f8f8727a8cebcab6c1b3c83f66084c18f7aeb06"
+  },
+  {
+    "patch_id": "TCA/ssd",
+    "split": "test",
+    "file": "assets/patches/TCA/ssd.png",
+    "sha256": "805343e26773619dd58ba9757975b3358776b95ab67c2b3a8888ee6cc4573fd7"
+  },
+  {
+    "patch_id": "TCA/centernet",
+    "split": "train",
+    "file": "assets/patches/TCA/centernet.png",
+    "sha256": "58090c4ae03fa2b2dd2736ed0be83ee9901a8eb47374ec0e4360b7002b1493e6"
+  },
+  {
+    "patch_id": "TCA/retinanet",
+    "split": "train",
+    "file": "assets/patches/TCA/retinanet.png",
+    "sha256": "796244636e6431384688dbd630dd0797f1f11770cf7b1391d8529542de658a7b"
+  },
+  {
+    "patch_id": "TCA/mask_rcnn",
+    "split": "train",
+    "file": "assets/patches/TCA/mask_rcnn.png",
+    "sha256": "ea185c80455ec0788ed92a48fe8622aae3ce140328ee1a786c840697063ec573"
+  },
+  {
+    "patch_id": "TCA/faster_rcnn",
+    "split": "test",
+    "file": "assets/patches/TCA/faster_rcnn.png",
+    "sha256": "eab2e6b8e3baf7632c7ddfc1192fc4f4fff96ee51e7533e478242dd50c1b2300"
+  },
+  {
+    "patch_id": "TCA/ddetr",
+    "split": "test",
+    "file": "assets/patches/TCA/ddetr.png",
+    "sha256": "7756f2691f8dbeb600f7354891468af89a30a0bdac432a7b7b4a5fdf695f9dd0"
+  },
+  {
+    "patch_id": "tsea/yolov2",
+    "split": "test",
+    "file": "assets/patches/tsea/yolov2.png",
+    "sha256": "58149b8043d6473e1a27d7b26210e8b73dda3cc0fa74fe70773cbb0f8c08bd3b"
+  },
+  {
+    "patch_id": "tsea/yolov3",
+    "split": "train",
+    "file": "assets/patches/tsea/yolov3.png",
+    "sha256": "9753562581b21e12751ce473e581d466b6a1937b26b7752c9831c1c5c1581c0d"
+  },
+  {
+    "patch_id": "tsea/yolov4",
+    "split": "train",
+    "file": "assets/patches/tsea/yolov4.png",
+    "sha256": "dbd18c632df47543cfb07235a2250761da655b32d0248275adaf0ba6ba265a54"
+  },
+  {
+    "patch_id": "tsea/yolov5",
+    "split": "test",
+    "file": "assets/patches/tsea/yolov5.png",
+    "sha256": "9094f0402e36db81adc2de852fca4ad6f1b97287a4517e5273f0c52dcf74abff"
+  },
+  {
+    "patch_id": "tsea/yolov7",
+    "split": "train",
+    "file": "assets/patches/tsea/yolov7.png",
+    "sha256": "c9e603149de3534478e7e29b06733edc9b062afcf1eaa55b02df0776e4efcd4b"
+  },
+  {
+    "patch_id": "tsea/ssd",
+    "split": "train",
+    "file": "assets/patches/tsea/ssd.png",
+    "sha256": "fe85747e69cef7f535996fb6a2e5ac16b0891d77c33e37ef0691938902996667"
+  },
+  {
+    "patch_id": "tsea/centernet",
+    "split": "test",
+    "file": "assets/patches/tsea/centernet.png",
+    "sha256": "bd54aac4ee7d90114ae15b030edca7ac5f228ed51d82d8539905504ff8072ee9"
+  },
+  {
+    "patch_id": "tsea/retinanet",
+    "split": "test",
+    "file": "assets/patches/tsea/retinanet.png",
+    "sha256": "2c0cc30b010a2d2d318b832f85bc6bac2f4905b83a88c11a5e7c7f9a0d1fbbb4"
+  },
+  {
+    "patch_id": "tsea/mask_rcnn",
+    "split": "train",
+    "file": "assets/patches/tsea/mask_rcnn.png",
+    "sha256": "6edf3ac98da9c551b8ea68691c00af155bf47edd13b7769110d61b00fe9f32a5"
+  },
+  {
+    "patch_id": "tsea/faster_rcnn",
+    "split": "train",
+    "file": "assets/patches/tsea/faster_rcnn.png",
+    "sha256": "8cfb300a88b33d1aafc13867091239db5a14c056dd774a61053a01d33df1f6d7"
+  },
+  {
+    "patch_id": "tsea/ddetr",
+    "split": "train",
+    "file": "assets/patches/tsea/ddetr.png",
+    "sha256": "e5a409ca52de6a877006419dcad00e77b997e2b15a243989cdd5657a26fa0b81"
+  },
+  {
+    "patch_id": "GNAP/yolov2",
+    "split": "train",
+    "file": "assets/patches/GNAP/yolov2.png",
+    "sha256": "49289b36e6ff4da533609cac766394beca5b654b39c62afb72b9e9d209ea62a9"
+  },
+  {
+    "patch_id": "GNAP/yolov3",
+    "split": "train",
+    "file": "assets/patches/GNAP/yolov3.png",
+    "sha256": "bfdb58120e9f08bd62061877870456777890b37f18e087a2492196b5f2724458"
+  },
+  {
+    "patch_id": "GNAP/yolov4",
+    "split": "train",
+    "file": "assets/patches/GNAP/yolov4.png",
+    "sha256": "453bc14971a0c5eba5aff12bc6be8f932a0ab4b95a014a4a971c540317fb2a8c"
+  },
+  {
+    "patch_id": "GNAP/yolov5",
+    "split": "train",
+    "file": "assets/patches/GNAP/yolov5.png",
+    "sha256": "70004c15fcd200293a523534830f1831d5125a3e4d2b0b3c4b16e2ffc18c0df9"
+  },
+  {
+    "patch_id": "GNAP/yolov7",
+    "split": "test",
+    "file": "assets/patches/GNAP/yolov7.png",
+    "sha256": "6888397d36065e79835e426ef3294e60a28e93ce50caf94e199bfc8e37f5722b"
+  },
+  {
+    "patch_id": "GNAP/ssd",
+    "split": "test",
+    "file": "assets/patches/GNAP/ssd.png",
+    "sha256": "9a570b7ac02af3dac5553c2a9d9bf9213a82bea8a23013abced07591c01a1209"
+  },
+  {
+    "patch_id": "GNAP/centernet",
+    "split": "train",
+    "file": "assets/patches/GNAP/centernet.png",
+    "sha256": "5504c9260cedd55b221a350b286d817b1f48d1da5b02c5a98fff9945f3b49cbc"
+  },
+  {
+    "patch_id": "GNAP/retinanet",
+    "split": "train",
+    "file": "assets/patches/GNAP/retinanet.png",
+    "sha256": "b4309b8ce02a79110128fee90c130ede8ae6f824dd69f21cb5693a20aae210d8"
+  },
+  {
+    "patch_id": "GNAP/mask_rcnn",
+    "split": "train",
+    "file": "assets/patches/GNAP/mask_rcnn.png",
+    "sha256": "1d96c75a3be9772bd96eb9d95af1dbe51b6c94cb5a186dd5ac7c7160ddf5f7fb"
+  },
+  {
+    "patch_id": "GNAP/faster_rcnn",
+    "split": "test",
+    "file": "assets/patches/GNAP/faster_rcnn.png",
+    "sha256": "d5854ed6b3ffb3c46528b231974df2708fe41c83e32cd31587e3441c782651d8"
+  },
+  {
+    "patch_id": "GNAP/ddetr",
+    "split": "test",
+    "file": "assets/patches/GNAP/ddetr.png",
+    "sha256": "74fc235f0d035ea3fab09a6a141736909eac58c3d29f75bdd3a157a7310d39a3"
+  },
+  {
+    "patch_id": "DM-NAP/yolov2",
+    "split": "train",
+    "file": "assets/patches/DM-NAP/yolov2.png",
+    "sha256": "475d9801cf9549ee43829466b33f57f9ac367ad863cf9146ed258399289a337a"
+  },
+  {
+    "patch_id": "DM-NAP/yolov3",
+    "split": "train",
+    "file": "assets/patches/DM-NAP/yolov3.png",
+    "sha256": "39dd21e7fc632ed7e82a05d2254f9e2658583e6964f3f86ed6c07f5356f7ce74"
+  },
+  {
+    "patch_id": "DM-NAP/yolov4",
+    "split": "test",
+    "file": "assets/patches/DM-NAP/yolov4.png",
+    "sha256": "6e2699d87a81ebc60a4a39d277a7da208f8e58abc1dc7b7af947198e233f1abc"
+  },
+  {
+    "patch_id": "DM-NAP/yolov5",
+    "split": "test",
+    "file": "assets/patches/DM-NAP/yolov5.png",
+    "sha256": "fe00685642f5157370647cfa5d9f1d310f4b9054ce9ef5780b563bb5918d0d6f"
+  },
+  {
+    "patch_id": "DM-NAP/yolov7",
+    "split": "train",
+    "file": "assets/patches/DM-NAP/yolov7.png",
+    "sha256": "4dc0935ed012d4047526cbbdec99b2a324a59de327b935dd877734f44fa35c18"
+  },
+  {
+    "patch_id": "DM-NAP/ssd",
+    "split": "test",
+    "file": "assets/patches/DM-NAP/ssd.png",
+    "sha256": "71be4b1b5292a1614bdf07922124339c290d27bc2cee35ce8036dbf10f51c3c7"
+  },
+  {
+    "patch_id": "DM-NAP/centernet",
+    "split": "test",
+    "file": "assets/patches/DM-NAP/centernet.png",
+    "sha256": "2ec1e495ec9cfd00e1d947ba137320bfd6a914916920a064637a5d672ff66b5d"
+  },
+  {
+    "patch_id": "DM-NAP/retinanet",
+    "split": "train",
+    "file": "assets/patches/DM-NAP/retinanet.png",
+    "sha256": "3546c7ce9d08bcca5c294059457455034348f79e8a9307d83f191ec90f94029f"
+  },
+  {
+    "patch_id": "DM-NAP/mask_rcnn",
+    "split": "train",
+    "file": "assets/patches/DM-NAP/mask_rcnn.png",
+    "sha256": "4d3e3712db41750c244c72666989d9e7c33a9ab8ebc14f5db4cd301d2192f8c1"
+  },
+  {
+    "patch_id": "DM-NAP/faster_rcnn",
+    "split": "train",
+    "file": "assets/patches/DM-NAP/faster_rcnn.png",
+    "sha256": "b4588144e1655af98ce8b97792d04e95ccc8fafca3eceb1645bf550bbc7c13b7"
+  },
+  {
+    "patch_id": "DM-NAP/ddetr",
+    "split": "train",
+    "file": "assets/patches/DM-NAP/ddetr.png",
+    "sha256": "8c0ccf0123d1449b790fcf24d0ad1178ec27cf803c129572cf95c4d5fd6af1de"
+  },
+  {
+    "patch_id": "AdvCloak/yolov2",
+    "split": "test",
+    "file": "assets/patches/AdvCloak/yolov2.png",
+    "sha256": "05843413c0894918ee2579fd3da5766cec8caeb35fdb72feb5291fada9559453"
+  },
+  {
+    "patch_id": "AdvCloak/yolov3",
+    "split": "test",
+    "file": "assets/patches/AdvCloak/yolov3.png",
+    "sha256": "a05f7ee78387b5442c95d53cc2040b27e8ba5120cb7f1dfd0518aa729aba85cd"
+  },
+  {
+    "patch_id": "AdvTshirt/yolov2",
+    "split": "test",
+    "file": "assets/patches/AdvTshirt/yolov2.png",
+    "sha256": "906175856d9a85a198ab8db9e9b9217612da2a6454ce03167e0a3d9b36d639b8"
+  },
+  {
+    "patch_id": "AA/yolov2",
+    "split": "test",
+    "file": "assets/patches/AA/yolov2.png",
+    "sha256": "d65ba570eb46c567202b1d292fd035afedf9e1b92142bc302e25ff65296b970b"
+  },
+  {
+    "patch_id": "AdvSticker/yolov3",
+    "split": "test",
+    "file": "assets/patches/AdvSticker/yolov3.png",
+    "sha256": "2110271c8785af0ffa6ad9e77c6371884284000d7e45ffcaff97bbea93932c47"
+  },
+  {
+    "patch_id": "UPC/yolov3",
+    "split": "test",
+    "file": "assets/patches/UPC/yolov3.png",
+    "sha256": "09488ea3fe6c7d2050bac0d864a7f1a4f9742f6b3167865b9c30caf7fb753f8e"
+  }
+]
