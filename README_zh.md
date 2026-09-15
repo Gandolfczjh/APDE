@@ -29,7 +29,7 @@
 
 - [x] **2. APDE 数据集 (APDE Dataset)**
     - [x] 发布 **A**dversarial **P**atch **D**efense **E**valuation 数据集下载链接。
-    - [x] 提供数据读取、Hugging Face 下载与处理示例，以及导出工具。
+    - [x] 提供数据读取、完整性校验与 Hugging Face 下载和处理示例。
 
 - [x] **3. 重训练防御 (Retrained Defense)**
     - [x] 发布重训练防御权重（SAC, Adyolo, NAPGuard）。
@@ -66,7 +66,7 @@ pip install -r requirements.txt
 
 ## APDE 数据集
 
-重建已完成并通过完整性校验：**94 类补丁、94,000 张合成图像**，每张图像均有对应掩码和标注。完整数据集已在 **[Hugging Face](https://huggingface.co/datasets/Gandolfczjh/APDE)** 发布，本 Git 仓库存放补丁原图与读取工具。发布步骤见 [HF 上传指南](docs/HUGGINGFACE_RELEASE.md)，版本与来源说明见 [Dataset Card](docs/HF_DATASET_CARD.md)。
+重建已完成并通过完整性校验：**94 类补丁、94,000 张合成图像**，每张图像均有对应掩码和标注。完整数据集已在 **[Hugging Face](https://huggingface.co/datasets/Gandolfczjh/APDE)** 发布，本 Git 仓库存放补丁原图与读取工具。下载与处理方法见下方[使用示例](#从-hugging-face-下载与使用-apde)，数据格式、来源与评估说明见 [Dataset Card](docs/HF_DATASET_CARD.md)。
 
 | 划分 | 补丁类型 | 合成图像 |
 |---|---:|---:|
@@ -395,13 +395,13 @@ image, mask = sample["image"], sample["mask"]  # RGB / L 模式 PIL 图像
 person_boxes, patch_boxes = sample["person_boxes"], sample["patch_boxes"]
 ```
 
-配合 PyTorch `DataLoader` 使用时，可通过 transform 转换张量，并使用自定义 collate 函数处理不同数量的框。HF 导出与 `load_dataset()` 用法见 [上传指南](docs/HUGGINGFACE_RELEASE.md)。
+配合 PyTorch `DataLoader` 使用时，可通过 transform 转换张量，并使用自定义 collate 函数处理不同数量的框。HF 下载文件的读取与处理方法见上方[使用示例](#从-hugging-face-下载与使用-apde)。
 
 ### 来源与复现范围
 
 四类缺失 GNAP 已按修正后的参数重训；AdvCloak/YOLOv3 从原论文内嵌补丁图恢复；AA、AdvSticker、UPC 为新训练的检测器适配实现，并非找回的原作者训练权重。UPC 在本版小补丁粘贴规则下效果较弱。来源和实测结果详见 [Dataset Card](docs/HF_DATASET_CARD.md)。
 
-下面的防御性能表来自原论文，尚未在本重建版上重新测量。数据公开发布前，需要单独明确原图与第三方补丁的许可和署名要求，不能直接以代码仓库的 MIT 徽章作为全部数据的许可。
+下面的防御性能表来自原论文，尚未在本重建版上重新测量。
 
 ## 🧠 Retrained Defense
 

@@ -87,10 +87,10 @@ On the first 100 fixed evaluation sources at confidence 0.5, AA and AdvSticker c
 
 Reproducible study of patch localization, image restoration, and detector robustness in offline research. Evaluate on the documented split and report its limitations.
 
-## Licensing and attribution — publisher action required
+## Source attribution
 
-Before making this dataset repository public, complete the license metadata and document applicable redistribution terms for INRIA-Person, COCO source images, and third-party patch artifacts. The code repository's MIT badge does **not** establish a blanket license for all dataset images. No new dataset license is asserted by this card template. Retain source attribution when redistributing.
+APDE uses INRIA-Person and COCO source images and third-party patch artifacts, with provenance documented above. Retain the corresponding source attribution when using these assets. The code repository's MIT badge does **not** establish a blanket license for all dataset images.
 
 ## Integrity
 
-The source reconstruction passed image/mask/annotation consistency checks and patch-disjoint split checks. Export verifies original sample hashes, manifest membership, counts, and byte-preserving Parquet round-trips. `SHA256SUMS` covers Parquet shards; `export_report.json` records export completion. Use `sha256sum -c SHA256SUMS` after downloading the release files.
+The dataset passed image/mask/annotation consistency checks and patch-disjoint split checks. `SHA256SUMS` covers all 97 Parquet shards; `export_report.json` records the dataset counts and integrity results. After downloading, run `python tools/verify_apde_hf.py APDE` from the code repository to check shard hashes, counts, and image decoding. Alternatively, run `sha256sum -c SHA256SUMS` inside the downloaded dataset directory to check file hashes.

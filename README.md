@@ -25,7 +25,7 @@ The current development plan is as follows, and we will continue to update this 
 
 - [x] **2. APDE Dataset**
     - [x] Release the **A**dversarial **P**atch **D**efense **E**valuation dataset download link.
-    - [x] Provide dataset readers, Hugging Face download/processing examples, and export tools.
+    - [x] Provide dataset readers, integrity checks, and Hugging Face download/processing examples.
 
 - [x] **3. Retrained Defense**
     - [x] Release retrained defense weights (SAC, Adyolo, NAPGuard).
@@ -61,7 +61,7 @@ pip install -r requirements.txt
 
 ## APDE dataset
 
-The reconstructed dataset is complete and validated: **94 patch types, 94,000 patched images**, with one mask and annotation file per image. The full dataset is available on **[Hugging Face](https://huggingface.co/datasets/Gandolfczjh/APDE)**. This Git repository includes the patch originals and reader tools. See the [publishing guide](docs/HUGGINGFACE_RELEASE.md) and [dataset card](docs/HF_DATASET_CARD.md).
+The reconstructed dataset is complete and validated: **94 patch types, 94,000 patched images**, with one mask and annotation file per image. The full dataset is available on **[Hugging Face](https://huggingface.co/datasets/Gandolfczjh/APDE)**. This Git repository includes the patch originals and reader tools. Follow the [download and usage examples](#download-and-use-apde-from-hugging-face) below; see the [dataset card](docs/HF_DATASET_CARD.md) for formats, sources, and evaluation details.
 
 | Split | Patch types | Patched images |
 |---|---:|---:|
@@ -390,13 +390,13 @@ image, mask = sample["image"], sample["mask"]  # RGB / L PIL images
 person_boxes, patch_boxes = sample["person_boxes"], sample["patch_boxes"]
 ```
 
-The reader works with PyTorch `DataLoader`; supply a transform and a custom collate function for variable-length boxes. For HF export and `load_dataset()` usage, follow [HUGGINGFACE_RELEASE.md](docs/HUGGINGFACE_RELEASE.md).
+The reader works with PyTorch `DataLoader`; supply a transform and a custom collate function for variable-length boxes. For downloaded HF files, follow the [download and usage examples](#download-and-use-apde-from-hugging-face).
 
 ### Provenance and limits
 
 Four missing GNAP combinations were retrained with corrected settings. AdvCloak/YOLOv3 was recovered from its original paper's embedded patch figure. AA, AdvSticker, and UPC are newly trained detector adaptations; UPC is weak under the small-patch placement used here. These are not recovered original-author checkpoints. Detailed provenance and diagnostic results are in the [dataset card](docs/HF_DATASET_CARD.md).
 
-The defense scores below belong to the published paper and have not been rerun on this reconstruction. Dataset source-image and patch-artifact terms must be documented separately from the code repository's MIT badge before public data redistribution.
+The defense scores below belong to the published paper and have not been rerun on this reconstruction.
 
 ## 🧠 Retrained Defense
 
