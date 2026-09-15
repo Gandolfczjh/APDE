@@ -23,7 +23,7 @@ python tools/export_apde_hf.py \
   --output /path/to/APDE_hf_release
 ```
 
-The source must have a passing 94-type `audit_report.json`. Choose an empty output folder with sufficient disk space (roughly another dataset-sized allocation). This command performs no upload. An interrupted export should be retried into a new empty directory; only an export with `export_report.json` containing `complete: true` is ready for release.
+The source must have a passing 94-type `audit_report.json`. Choose an empty output folder with sufficient disk space (roughly another dataset-sized allocation). This command performs no upload. For interrupted exports, repeat the command with `--resume`: each existing shard is compared against the source before reuse; differing shards are rejected. The exported dataset card is preserved so publisher edits are not lost. Four shards are processed concurrently by default; use `--workers 1` on memory-constrained hosts. Only an export with `export_report.json` containing `complete: true` is ready for release.
 
 The export contains 97 Parquet files: 57 train shards, 37 test shards, two clean-source shards, and one 94-patch shard. Each image/mask keeps its original PNG bytes. This avoids uploading the raw tree's approximately 282,000 small sample files or duplicating its compatibility symlinks. Source server paths, process logs, environment paths, and checkpoints are excluded.
 
@@ -41,6 +41,12 @@ APDE_hf_release/
 ```
 
 Local smoke check:
+
+```bash
+python tools/verify_apde_hf.py /path/to/APDE_hf_release
+```
+
+This verifies every shard checksum/count and checks Hugging Face image decoding. To load all rows locally:
 
 ```python
 from datasets import load_dataset

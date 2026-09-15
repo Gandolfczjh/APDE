@@ -4,6 +4,7 @@ No network calls, repository creation, or uploads. Original PNG bytes are kept.
 One shard per patch type; clean sources and patch images are separate configs.
 """
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import json
 import os
@@ -23,15 +24,17 @@ def image_value(data, filename):
     return {'bytes': data, 'path': filename}
 
 
-def export(source, output):
+def export(source, output, resume=False, workers=4):
     import pyarrow as pa
     import pyarrow.parquet as pq
     source = source.resolve()
     output = output.resolve()
     if output == source or output.is_relative_to(source) or source.is_relative_to(output):
         raise ValueError('Output and source directories must be separate')
-    if output.exists() and any(output.iterdir()):
-        raise ValueError('Choose an empty output directory; interrupted exports are not publication-ready')
+    if workers < 1:
+        raise ValueError('workers must be positive')
+    if output.exists() and any(output.iterdir()) and not resume:
+        raise ValueError('Choose an empty output directory or use --resume to validate and reuse shards')
     audit = json.loads((source / 'audit_report.json').read_text())
     if not audit.get('complete') or audit.get('valid_types') != 94:
         raise ValueError('Source has not passed the complete 94-type audit')
@@ -56,6 +59,11 @@ def export(source, output):
                 raise ValueError(f'Unexpected export column: {field}')
         metadata = {b'huggingface': json.dumps({'info': {'features': features}}).encode()}
         table = table.replace_schema_metadata(metadata)
+        if path.exists():
+            if not pq.read_table(path).equals(table, check_metadata=True):
+                raise ValueError(f'Existing shard differs from source: {relative}')
+            checksums[relative] = sha(path.read_bytes())
+            return
         temp = path.with_suffix('.parquet.tmp')
         pq.write_table(table, temp, compression='zstd', row_group_size=100)
         # Validate the schema, embedded bytes and row counts after serialization.
@@ -90,7 +98,7 @@ def export(source, output):
         entries = [json.loads(line) for line in (source / f'{split}.jsonl').read_text().splitlines()]
         split_rows[split] = Counter(json.dumps(r, sort_keys=True) for r in entries)
     consumed = {'train': Counter(), 'test': Counter()}
-    for group in plan:
+    def export_group(group):
         dest = resolve_file(source, 'groups/' + group['key'])
         info = json.loads((dest / 'complete.json').read_text())
         manifest = (dest / 'samples.jsonl').read_bytes()
@@ -118,21 +126,27 @@ def export(source, output):
                 patch_sha256=info['patch_sha256'], image_sha256=row['image_sha256'],
                 mask_sha256=row['mask_sha256'], image=image_value(data['image'], row['id']+'.png'),
                 mask=image_value(data['mask'], row['id']+'.mask.png'), labels=data['label'].decode()))
-            consumed[group['split']][json.dumps(row, sort_keys=True)] += 1
         relative=f'data/{group["split"]}/{group["method"]}__{group["detector"]}.parquet'
         write_table(output_rows, relative, {'image', 'mask'})
-        patch_rows.append(dict(patch_id=group['key'], method=group['method'], detector=group['detector'],
+        patch_record=dict(patch_id=group['key'], method=group['method'], detector=group['detector'],
             split=group['split'], attack_goal=group['task'], sha256=info['patch_sha256'],
-            image=image_value(patch, group['key'].replace('/', '__')+'.png')))
-        public_plan.append({k: group[k] for k in ['key','method','detector','task','shape','split']})
-        totals[group['split']] += len(output_rows)
+            image=image_value(patch, group['key'].replace('/', '__')+'.png'))
         print(f'{group["key"]}: {len(output_rows)} rows exported', flush=True)
+        return patch_record, [json.dumps(row, sort_keys=True) for row in records]
+
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        for group, (patch_record, records) in zip(plan, executor.map(export_group, plan)):
+            patch_rows.append(patch_record)
+            public_plan.append({k: group[k] for k in ['key','method','detector','task','shape','split']})
+            totals[group['split']] += len(records)
+            consumed[group['split']].update(records)
     if consumed != split_rows or totals != {'train': 57000, 'test': 37000}:
         raise ValueError('Export does not exactly match root train/test manifests')
     write_table(patch_rows, 'patches/patches.parquet', {'image'})
     (output/'split_plan.json').write_text(json.dumps(public_plan, indent=2))
     card=Path(__file__).resolve().parents[1]/'docs/HF_DATASET_CARD.md'
-    (output/'README.md').write_text(card.read_text(encoding='utf-8'), encoding='utf-8')
+    if not (output/'README.md').exists():
+        (output/'README.md').write_text(card.read_text(encoding='utf-8'), encoding='utf-8')
     (output/'SHA256SUMS').write_text(''.join(f'{value}  {key}\n' for key,value in sorted(checksums.items())))
     (output/'export_report.json').write_text(json.dumps(dict(complete=True,version='2026-09-reconstruction',
         counts=dict(totals),clean_positive=1000,clean_negative=1000,patches=94,
@@ -143,5 +157,7 @@ if __name__ == '__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--resume',action='store_true',help='Validate/reuse existing shards; never overwrite differing shards')
+    parser.add_argument('--workers',type=int,default=4,help='Concurrent patch shards; reduce to 1 on memory-constrained hosts')
     args=parser.parse_args()
-    export(args.source,args.output)
+    export(args.source,args.output,args.resume,args.workers)
