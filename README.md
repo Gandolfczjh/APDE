@@ -25,7 +25,7 @@ The current development plan is as follows, and we will continue to update this 
 
 - [ ] **2. APDE Dataset**
     - [ ] Release the **A**dversarial **P**atch **D**efense **E**valuation dataset download link.
-    - [ ] Provide data preprocessing and DataLoader scripts.
+    - [x] Provide a reconstruction dataset reader and Hugging Face export tools.
 
 - [x] **3. Retrained Defense**
     - [x] Release retrained defense weights (SAC, Adyolo, NAPGuard).
@@ -48,7 +48,7 @@ With the application of deep learning in autonomous driving and security surveil
 
 ```bash
 # Clone the repository
-git clone [https://github.com/Gandolfczjh/APDE](https://github.com/Gandolfczjh/APDE)
+git clone https://github.com/Gandolfczjh/APDE.git
 cd APDE
 
 # Create a virtual environment
@@ -58,6 +58,78 @@ conda activate APDE
 # Install dependencies
 pip install -r requirements.txt
 ```
+
+## APDE dataset — September 2026 reconstruction
+
+The reconstructed dataset is complete and validated: **94 patch types, 94,000 patched images**, with one mask and annotation file per image. The Hugging Face download link is **pending publication**; no dataset is hosted in this Git repository yet. See the [publishing guide](docs/HUGGINGFACE_RELEASE.md) and [dataset card](docs/HF_DATASET_CARD.md).
+
+| Split | Patch types | Patched images |
+|---|---:|---:|
+| Train | 57 | 57,000 |
+| Test | 37 | 37,000 |
+| Total | 94 | 94,000 |
+
+This is a reconstruction, **not the exact original dataset used for the paper**. The paper reports 56,400/37,600 images; this release keeps each 1,000-image patch type entirely in one split. Clean sources are shared across patch types, including across train/test. Split isolation applies to patch types, not source photographs.
+
+The source pool contains 1,000 positives (81 INRIA Test + 919 COCO val2017) sampled without replacement from 288 + 2,693 positive candidates, and 1,000 annotation-negative backgrounds (162 INRIA + 838 COCO). Images are padded/resized to 416×416. Masks are lossless binary PNG (0/255); annotation rows are `person x1 y1 x2 y2` and `patch x1 y1 x2 y2` in pixel coordinates. Patch right/bottom coordinates are exclusive.
+
+### Directory layout
+
+```text
+APDE_rebuilt_20260911/
+├── clean/
+│   ├── positive/{images,labels}/        # 1,000 clean positive samples
+│   └── negative/{images,labels}/        # 1,000 clean negative samples
+├── groups/<method>/<detector>/
+│   ├── images/                         # 1,000 RGB PNGs per patch type
+│   ├── masks/                          # 1,000 binary PNG masks
+│   ├── labels/                         # 1,000 TXT annotations
+│   ├── patch.png                       # Frozen patch used for this group
+│   ├── samples.jsonl                   # Paths, split, and hashes
+│   └── complete.json
+├── images/<method>/<detector>/          # Compatibility symlink to groups
+├── annotations/<method>/
+│   ├── <detector>_label/                # Compatibility symlink
+│   └── <detector>_mask/                 # Compatibility symlink
+├── train.jsonl                         # 57,000 sample records
+├── test.jsonl                          # 37,000 sample records
+├── split_plan.json
+├── positive_sources.json
+├── negative_sources.json
+├── source_report.json
+├── build_report.json
+├── audit_report.json
+├── pipeline_status.json
+├── code_snapshot/
+└── preview.jpg
+```
+
+The eight matrix families (`advpatch`, `TCEGA`, `tsea-pgd`, `tsea-mim`, `TCA`, `tsea`, `GNAP`, `DM-NAP`) each cover 11 detectors: `yolov2`, `yolov3`, `yolov4`, `yolov5`, `yolov7`, `ssd`, `centernet`, `retinanet`, `mask_rcnn`, `faster_rcnn`, `ddetr`.
+
+The remaining six types are **test-only**: `AdvCloak/yolov2`, `AdvCloak/yolov3`, `AdvTshirt/yolov2`, `AA/yolov2`, `AdvSticker/yolov3`, and `UPC/yolov3`. The train/test JSONL manifests define the split; there are no duplicated train/test image directories.
+
+### Read the local dataset
+
+```bash
+python -m pip install Pillow
+```
+
+```python
+from apde_data import APDEDataset
+
+data = APDEDataset("/path/to/APDE_rebuilt_20260911", split="test")
+sample = data[0]
+image, mask = sample["image"], sample["mask"]  # RGB / L PIL images
+person_boxes, patch_boxes = sample["person_boxes"], sample["patch_boxes"]
+```
+
+The reader works with PyTorch `DataLoader`; supply a transform and a custom collate function for variable-length boxes. For HF export and `load_dataset()` usage, follow [HUGGINGFACE_RELEASE.md](docs/HUGGINGFACE_RELEASE.md).
+
+### Provenance and limits
+
+Four missing GNAP combinations were retrained with corrected settings. AdvCloak/YOLOv3 was recovered from its original paper's embedded patch figure. AA, AdvSticker, and UPC are newly trained detector adaptations; UPC is weak under the small-patch placement used here. These are not recovered original-author checkpoints. Detailed provenance and diagnostic results are in the [dataset card](docs/HF_DATASET_CARD.md).
+
+The defense scores below belong to the published paper and have not been rerun on this reconstruction. Dataset source-image and patch-artifact terms must be documented separately from the code repository's MIT badge before public data redistribution.
 
 ## 🧠 Retrained Defense
 

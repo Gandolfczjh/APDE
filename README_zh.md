@@ -29,7 +29,7 @@
 
 - [ ] **2. APDE 数据集 (APDE Dataset)**
     - [ ] 发布 **A**dversarial **P**atch **D**efense **E**valuation 数据集下载链接。
-    - [ ] 提供数据预处理与 DataLoader 脚本。
+    - [x] 提供重建版数据读取与 Hugging Face 导出工具。
 
 - [x] **3. 重训练防御 (Retrained Defense)**
     - [x] 发布重训练防御权重（SAC, Adyolo, NAPGuard）。
@@ -52,7 +52,7 @@
 
 ```bash
 # Clone the repository
-git clone [https://github.com/Gandolfczjh/APDE](https://github.com/Gandolfczjh/APDE)
+git clone https://github.com/Gandolfczjh/APDE.git
 cd APDE
 
 # Create a virtual environment
@@ -63,6 +63,78 @@ conda activate APDE
 pip install -r requirements.txt
 
 ```
+
+## APDE 数据集：2026 年 9 月重建版
+
+重建已完成并通过完整性校验：**94 类补丁、94,000 张合成图像**，每张图像均有对应掩码和标注。Hugging Face 下载链接**待发布**，本 Git 仓库暂不存放数据文件。发布步骤见 [HF 上传指南](docs/HUGGINGFACE_RELEASE.md)，版本与来源说明见 [Dataset Card](docs/HF_DATASET_CARD.md)。
+
+| 划分 | 补丁类型 | 合成图像 |
+|---|---:|---:|
+| 训练集 | 57 | 57,000 |
+| 测试集 | 37 | 37,000 |
+| 总计 | 94 | 94,000 |
+
+这是重新制作的数据集，**并非论文原始数据的逐字节恢复**。论文原文为 56,400/37,600 张；本版为保持每类 1,000 张且补丁类型完全隔离，采用 57,000/37,000 划分。不同补丁类型共用 clean 原图，因此训练/测试集保证的是**补丁类型隔离，原始照片并不隔离**。
+
+从 INRIA Test 的 288 张和 COCO val2017 的 2,693 张正样本中，无放回随机抽取 1,000 张（INRIA 81 + COCO 919）；另准备 1,000 张标注中无人的负样本（INRIA 162 + COCO 838）。图像补边缩放至 416×416，掩码为无损二值 PNG（0/255）。TXT 标注格式为 `person x1 y1 x2 y2` 或 `patch x1 y1 x2 y2`，使用像素坐标；补丁框右、下边界不包含在框内。
+
+### 文件夹结构
+
+```text
+APDE_rebuilt_20260911/
+├── clean/
+│   ├── positive/{images,labels}/        # 1,000 张 clean 正样本
+│   └── negative/{images,labels}/        # 1,000 张 clean 负样本
+├── groups/<攻击方法>/<检测器>/
+│   ├── images/                         # 每类 1,000 张 RGB PNG
+│   ├── masks/                          # 每类 1,000 张二值掩码
+│   ├── labels/                         # 每类 1,000 个 TXT 标注
+│   ├── patch.png                       # 生成该组数据时固定的补丁
+│   ├── samples.jsonl                   # 路径、划分与哈希
+│   └── complete.json
+├── images/<攻击方法>/<检测器>/           # 指向 groups 的兼容软链接
+├── annotations/<攻击方法>/
+│   ├── <检测器>_label/                  # 标注软链接
+│   └── <检测器>_mask/                   # 掩码软链接
+├── train.jsonl                         # 57,000 条训练样本
+├── test.jsonl                          # 37,000 条测试样本
+├── split_plan.json
+├── positive_sources.json
+├── negative_sources.json
+├── source_report.json
+├── build_report.json
+├── audit_report.json
+├── pipeline_status.json
+├── code_snapshot/
+└── preview.jpg
+```
+
+八种方法 `advpatch`、`TCEGA`、`tsea-pgd`、`tsea-mim`、`TCA`、`tsea`、`GNAP`、`DM-NAP` 各覆盖 11 个检测器：`yolov2`、`yolov3`、`yolov4`、`yolov5`、`yolov7`、`ssd`、`centernet`、`retinanet`、`mask_rcnn`、`faster_rcnn`、`ddetr`。
+
+其余六类**全部进入测试集**：`AdvCloak/yolov2`、`AdvCloak/yolov3`、`AdvTshirt/yolov2`、`AA/yolov2`、`AdvSticker/yolov3`、`UPC/yolov3`。训练和测试由 JSONL 清单划分，不额外复制图片到 train/test 文件夹。
+
+### 读取本地数据
+
+```bash
+python -m pip install Pillow
+```
+
+```python
+from apde_data import APDEDataset
+
+data = APDEDataset("/path/to/APDE_rebuilt_20260911", split="test")
+sample = data[0]
+image, mask = sample["image"], sample["mask"]  # RGB / L 模式 PIL 图像
+person_boxes, patch_boxes = sample["person_boxes"], sample["patch_boxes"]
+```
+
+配合 PyTorch `DataLoader` 使用时，可通过 transform 转换张量，并使用自定义 collate 函数处理不同数量的框。HF 导出与 `load_dataset()` 用法见 [上传指南](docs/HUGGINGFACE_RELEASE.md)。
+
+### 来源与复现范围
+
+四类缺失 GNAP 已按修正后的参数重训；AdvCloak/YOLOv3 从原论文内嵌补丁图恢复；AA、AdvSticker、UPC 为新训练的检测器适配实现，并非找回的原作者训练权重。UPC 在本版小补丁粘贴规则下效果较弱。来源和实测结果详见 [Dataset Card](docs/HF_DATASET_CARD.md)。
+
+下面的防御性能表来自原论文，尚未在本重建版上重新测量。数据公开发布前，需要单独明确原图与第三方补丁的许可和署名要求，不能直接以代码仓库的 MIT 徽章作为全部数据的许可。
 
 ## 🧠 Retrained Defense
 
